@@ -3,7 +3,9 @@ package com.example.test;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 
 public class MyService extends Service implements Runnable{
 
@@ -66,6 +68,12 @@ public class MyService extends Service implements Runnable{
     _b = true;
     thread.start();
   }
+  
+  private Handler handler;
+  
+  public void setHandler(Handler handler){
+    this.handler = handler;
+  }
 
   @Override
   public void run() {
@@ -74,6 +82,9 @@ public class MyService extends Service implements Runnable{
       try {
         Thread.sleep(1000);
         time++;
+        Message msg = new Message();
+        msg.what = 1;
+        handler.sendMessage(msg);
       } catch (InterruptedException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
